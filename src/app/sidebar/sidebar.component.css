@@ -1,0 +1,93 @@
+.sidebar{
+  background: #FFF;
+  display: inline-flex;
+  min-height:100vh !important;
+  font-family: 'Montserrat', sans-serif;
+  min-height: 100%;
+}
+.nav-item{
+  border-bottom: 1px solid rgba(204, 204, 204, 0.2);
+}
+.nav-link{
+  align-items: center;
+  display: flex;
+  font-family: inherit;
+  padding: 1rem 1.875rem;
+  white-space: nowrap;
+  height: 52px;
+}
+.nav-link i{
+  margin-right: 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1;
+}
+.menu-title {
+  color: inherit;
+  display: inline-block;
+  font-size: 0.8125rem;
+  line-height: 1;
+  vertical-align: middle;
+}
+.nav-profile {
+  background: transparent;
+  border-top: 1px solid rgba(204, 204, 204, 0.2);
+  border-bottom: 1px solid rgba(204, 204, 204, 0.2);
+}
+.profile-name {
+  margin-left: 0.75rem;
+  padding: 20px 0 20px 40px;
+}
+.name {
+  color: #000;
+  font-family: "opensans-semibold", sans-serif;
+  font-size: 13px;
+  margin-bottom: 0;
+  text-transform: capitalize;
+}
+.designation {
+  font-family: "Montserrat-regular", sans-serif;
+  font-size: 12px;
+  color: #c7c7c7;
+}
+.nav-category {
+  line-height: 1;
+  text-transform: uppercase;
+}
+.nav-category .nav-link {
+  color: #000;
+  font-family: "opensans-semibold", sans-serif;
+  font-size: 0.6875rem;
+  padding: 20px 15px 11px 32px;
+  height: auto;
+}
+.sub-menu{
+  background: #f7f6f6;
+}
+.sub-menu .nav-item .nav-link{
+  padding-left:60px;
+}
+.nav-dropdown--js{
+  cursor: pointer;
+  position: relative;
+  background:#f7f6f6;
+}
+
+.nav-dropdown--js .fa-angle-down{
+  right: 20px;
+  margin-right: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.nav-link{
+  color:#333;
+}
+.dropdown-active{
+  background: #FF851B;
+}
+.dropdown-active a, .dropdown-active i, .dropdown-active .menu-title{
+  color:#FFF
+}
+.active .nav-link{
+  color:#FF851B
+}
