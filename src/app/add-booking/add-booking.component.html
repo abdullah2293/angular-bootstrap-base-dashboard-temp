@@ -1,3 +1,311 @@
-<p>
-  add-booking works!
-</p>
+<div class="card">
+  <div class="card-body">
+    <div class="card-title">
+      <strong>New Booking</strong>
+    </div>
+    <hr>
+    <form action="" (ngSubmit)="onSubmit()" [formGroup]="bookingform" novalidate>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-xs-12">
+          <p class="area-label">Shipper Details</p>
+          <div class="form-group row">
+            <label for="" class="col-sm-3 col-xs-12 col-form-label">Name <span class="text-red">*</span></label>
+            <div class="col-md-9 col-sm-12">
+              <input formControlName="shipper_name" type="text" class="form-control">
+            </div>
+
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3 col-xs-12 col-form-label">Address <span class="text-red">*</span></label>
+            <div class="col-md-9 col-sm-12">
+              <input formControlName="shipper_address" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3 col-xs-12 col-form-label">City</label>
+            <div class="col-md-9 col-sm-12">
+              <input formControlName="shipper_city" disabled type="text" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-md-3 col-sm-12 col-xs-12 col-form-label">Phone Number<span
+                class="text-red">*</span></label>
+            <div class="col-md-9 col-sm-12">
+              <input formControlName="shipper_phone_number" type="tel" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xs-12">
+          <p class="area-label">Consignee Details</p>
+          <div class="form-group row">
+            <label for="" class="col-md-3 col-sm-12 col-xs-12 col-form-label">Name <span
+                class="text-red">*</span></label>
+            <div class="col-md-9 col-sm-12">
+              <input formControlName="consignee_name" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-sm-12 col-xs-12 col-form-label" for="">Address <span
+                class="text-red">*</span></label>
+            <div class="col-md-9 col-sm-12">
+              <input formControlName="consignee_address" type="text" class="form-control">
+            </div>
+
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-sm-12 col-xs-12 col-form-label" for="">City <span
+                class="text-red">*</span></label>
+            <div class="col-md-9 col-sm-12 contains--list">
+              <input formControlName="consignee_city" (keyup)="fetchCityByName()" type="text" class="form-control">
+              <ul *ngIf="to_cities" class="block--list">
+                <li class="block--list_element" (click)="select(city)" *ngFor="let city of cities">{{city.city_name}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-sm-12 col-xs-12 col-form-label" for="">Phone Number <span
+                class="text-red">*</span></label>
+            <div class="col-md-9 col-sm-12">
+              <input formControlName="consignee_phone_number" type="tel" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-sm-12 col-xs-12 col-form-label" for="">Reference <span
+                class="text-red">*</span></label>
+            <div class="col-md-9 col-sm-12">
+              <input formControlName="consignee_reference" type="tel" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="form-group row">
+            <label for="" class="col-md-5 col-sm-12 col-form-label">
+              Shipment Arrived
+            </label>
+            <div class="col-md-7 col-sm-12">
+              <input type="checkbox" value="1" formControlName="shipment_arrived">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="form-group row">
+            <label for="" class="col-md-5 col-sm-12 col-form-label">Payment Type <span class="text-red">*</span></label>
+            <div class="col-md-7 col-sm-12">
+              <select formControlName="payment_type_id" (change)="isTopay()" class="form-control">
+                <option selected>select payment type</option>
+                <option *ngFor="let payment_type of payment_types" [value]="payment_type.id">
+                  {{payment_type.display_name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12" *ngIf="is_topay">
+          <div class="form-group row">
+            <label class="col-md-5 col-sm-12 col-form-label">Topay Amount </label>
+            <div class="col-md-7 col-sm-12">
+              <input type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="form-group row">
+            <label for="" class="col-md-5 col-sm-12">Service Type <span class="text-red">*</span></label>
+            <div class="col-md-7 col-sm-12">
+              <select formControlName="service_type_id" (change)="isCod()" class="form-control">
+                <option selected>select service type</option>
+                <option *ngFor="let service_type of service_types" [value]="service_type.id">
+                  {{service_type.display_name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12" *ngIf="cod">
+          <div class="form-group row">
+            <label class="col-md-5 col-sm-12 col-xs-12 col-form-label" for="">COD Amount</label>
+            <div class="col-md-7 col-sm-12 col-xs-12">
+              <input type="text" formControlName="cod_amount" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-xs-12">
+
+          <div class="form-group">
+            <label for="">Description</label>
+            <textarea formControlName="desc" id="" cols="30" rows="10" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xs-12">
+
+          <div class="form-group">
+            <label for="">Remarks</label>
+            <textarea formControlName="remarks" id="" cols="30" rows="10" class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="form-group row">
+            <label for="" class="col-md-6 col-sm-12 col-xs-12 col-form-label">Actual Weight</label>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              <input type="tel" min="1" formControlName="actual_weight" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="form-group row">
+            <label class="col-md-6 col-sm-12 col-xs-12 col-form-label">Piece(s) <span class="text-red">*</span></label>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              <input type="tel" formControlName="piece_count" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <p class="area-label">Volumetric Weight</p>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-6">
+          <div class="form-group row">
+            <label class="col-md-5 col-sm-12 col-xs-12 col-form-label">Length</label>
+            <div class="col-md-7 col-sm-12 col-xs-12">
+              <input type="tel" formControlName="length" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-6">
+          <div class="form-group row">
+            <label class="col-md-5 col-sm-12 col-xs-12 col-form-label">Width</label>
+            <div class="col-md-7 col-sm-12 col-xs-12">
+              <input type="tel" formControlName="width" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-6">
+          <div class="form-group row">
+            <label class="col-md-5 col-sm-12 col-xs-12 col-form-label">Height</label>
+            <div class="col-md-7 col-sm-12 col-xs-12">
+              <input type="tel" formControlName="height" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <button (click)="calc_weight()" type="button" class="btn btn-primary">Calculate Weight</button>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-6">
+          <div class="form-group row">
+            <label class="col-md-7 col-sm-12 col-xs-12 col-form-label">Volumetric Weight</label>
+            <div class="col-md-5 col-sm-12 col-xs-12">
+              <input type="tel" formControlName="volumetric_weight" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="area-label">Charges</p>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group row">
+                <label for="" class="col-md-6 col-sm-12 col-xs-12 col-form-label">Chargeable Weight
+                  <span class="text-red">*</span></label>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <input type="tel" min="1" formControlName="weight" class="form-control">
+                  <div
+                    *ngIf="getFormControl('weight').invalid && (getFormControl('weight').dirty || getFormControl('weight').touched)"
+                    class="invalid-feedback">
+                    <p *ngIf="getFormControl('weight').errors.required">Weight is required</p>
+                    <p *ngIf="getFormControl('weight').errors.min">Weight should atleast be 1 kg</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-xs-12">
+              <div class="form-group row">
+                <label for="" class="col-md-6 col-sm-12 col-xs-12 col-form-label">Service charges</label>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <input type="text" disabled formControlName="service_charges" class="form-control">
+                  <div *ngIf="getFormControl('service_charges').invalid" class="invalid-feedback">
+                    <p *ngIf="getFormControl('service_charges').errors.required">Service charges
+                      are
+                      required</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group row">
+                <label class="col-md-6 col-sm-12 col-xs-12 col-form-label" for="">Additional Charges</label>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <input type="text" formControlName="additional_amount" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group row">
+                <label class="col-md-6 col-sm-12 col-xs-12 col-form-label" for="">Discount</label>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <input type="text" formControlName="discount" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group row">
+                <label class="col-md-6 col-sm-12 col-xs-12 col-form-label" for="">Gst Amount %</label>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <input type="text" disabled formControlName="gst_amount" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="form-group row">
+                <label class="col-md-6 col-sm-12 col-xs-12 col-form-label" for="">Return Charges</label>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <input type="text" disabled formControlName="return_charges" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-xs-12">
+              <div class="form-group row">
+                <label class="col-md-6 col-sm-12 col-xs-12 col-form-label" for="">Total Charges</label>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <input type="text" disabled formControlName="total_charges" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="button" (click)="calc()" class="btn btn-primary">Calculate</button>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-right">
+            <button type="button" class="btn btn-default">Cancel</button>
+            <input type="submit" class="btn btn-primary" value="Add Booking">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

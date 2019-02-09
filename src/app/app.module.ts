@@ -3,40 +3,54 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AddBookingComponent } from './add-booking/add-booking.component';
-import { BookingsComponent } from './bookings/bookings.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { AppRoutingModule } from './app-routing';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
-
-const appRoutes: Routes = [
-  { path: '', component: DashboardComponent },
-  { path: 'new/booking', component: AddBookingComponent },
-  { path: 'list/bookings', component: BookingsComponent },
-  { path: '**', component: PageNotFoundComponent }
-];
+import { HeaderComponent } from './header/header.component';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule,HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './services/auth/token.interceptor';
+import { HttpService } from './services/httpservice.service';
+import { AuthGuardService } from './services/auth/auth-guard.service';
+import { AuthService } from './services/auth/auth.service';
+import { LocalstorageService } from './services/storage/localstorage.service';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { RoleGuardService as RoleGuard } from './services/auth/role-guard.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    AddBookingComponent,
-    BookingsComponent,
-    PageNotFoundComponent,
+    LoginComponent,
+    AdminLayoutComponent,
     HeaderComponent,
     SidebarComponent
   ],
   imports: [
     NgbModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    ),
-    BrowserModule
+    BrowserModule,
+    CommonModule,
+    RouterModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    HttpClient,
+    HttpService,
+    AuthGuardService,
+    AuthService,
+    LocalstorageService,
+    JwtHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    RoleGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

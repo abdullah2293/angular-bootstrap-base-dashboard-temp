@@ -1,3 +1,89 @@
-<p>
-  bookings works!
-</p>
+<div class="card">
+  <div class="card-body">
+    <div class="card-title d-flex">
+      <strong>Bookings</strong>
+      <div class="button text-right">
+        <a href="/new-booking" class="btn btn-primary">
+          Add Booking
+        </a>
+      </div>
+
+    </div>
+
+    <div>
+      <hr>
+      <div class="spinner-wrapper" *ngIf="!data_loaded">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="table-responsive" *ngIf="data_loaded">
+        <table class="table table-striped">
+          <thead>
+            <th>
+              Booking Number
+            </th>
+            <th>
+              Booking Date
+            </th>
+            <th>
+              Shipper Name
+            </th>
+            <th>
+              Consignee Name
+            </th>
+            <th>
+              Destination
+            </th>
+            <th>
+              Weight
+            </th>
+            <th>
+              Piece(s)
+            </th>
+            <th>
+              Status
+            </th>
+            <th colspan="2">
+              Action
+            </th>
+          </thead>
+
+          <tbody *ngIf="bookings.length >= 1">
+            <tr *ngFor="let booking of bookings">
+              <td>{{booking.id}}</td>
+              <td>{{booking.created_at}}</td>
+              <td>{{booking.shipper.shipper_name}}</td>
+              <td>{{booking.consignee.consignee_name}}</td>
+              <td>{{booking.consignee.consignee_city}}</td>
+              <td>{{booking.weight}} kg</td>
+              <td>{{booking.piece_count}}</td>
+              <td>
+                <span *ngIf="booking.status == 'cancelled'" title="{{booking.delivery_status}}"
+                  class="badge badge-danger">{{booking.status}}</span>
+                <span *ngIf="booking.status == 'booking' || booking.status == 'Booking'"
+                  title="{{booking.delivery_status}}" class="badge badge-light">{{booking.status}}</span>
+                <span *ngIf="booking.status == 'Arrived'" title="{{booking.delivery_status}}"
+                  class="badge badge-info">{{booking.status}}</span>
+                <span *ngIf="booking.status == 'manifested'" title="{{booking.delivery_status}}"
+                  class="badge badge-primary">{{booking.status}}</span>
+                <span *ngIf="booking.status == 'shipped'" title="{{booking.delivery_status}}"
+                  class="badge badge-success">{{booking.status}}</span>
+              </td>
+              <td><button [disabled]="booking.status !== 'Booking'" [routerLink]="['/edit-booking',booking.id]"
+                  class="btn btn-sm btn-primary"><i class="fa fa-pencil-alt"></i></button> /
+                <button [disabled]="booking.status !== 'Booking'" (click)="cancel(booking.id)"
+                  class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="bookings.length == 0">
+            <tr>
+              <td colspan="9">There are no bookings as of yet</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>

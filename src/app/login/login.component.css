@@ -1,0 +1,70 @@
+
+    .login-box {
+      background: #FFF;
+      padding: 20px;
+      box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-custom-label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .form-custom-control {
+      display: block;
+      width: 100%;
+      background: #fff;
+      border: 0;
+      padding: 10px 15px;
+      font-size: 15px;
+      border-bottom: 2px solid #d9d9d9;
+      transition: 0.3ms ease-in;
+    }
+
+    .form-custom-control:focus {
+      border-bottom: 2px solid #007bff;
+      outline: none;
+    }
+
+    .password>.form-custom-control:focus+.password-visibility i{
+      color:#007bff;
+    }
+
+    .login-box-heading {
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fa-fingerprint {
+      font-size: 120px;
+      color: #007bff;
+    }
+
+    .password{
+      position: relative;
+      display: block;
+    }
+    .password-visibility{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
+    }
+    .fa-2x{
+      font-size:1.5em !important;
+    }
+    .btn-full{
+      width:100% !important;
+      border-radius: 0;
+      padding: 18px !important;
+      letter-spacing: 1px;
+    }
+    .password-visibility i{
+      color:#d9d9d9;
+      transition: 0.3ms ease-in;
+    }

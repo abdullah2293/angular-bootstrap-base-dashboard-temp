@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Franchise - Xoop Cargo</title>
+
+  <!-- inline styles -->
+  <style>
+    body {
+      background: #7FDBFF;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      min-height: 100% !important;
+    }
+
+    .container-fluid {
+      min-height: 100vh !important;
+      min-height: 100% !important;
+      display: block;
+    }
+
+    .container-fluid .row {
+      min-height: 100vh !important;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="login-box">
+          <div class="login-box-heading">
+            <i class="fas fa-fingerprint"></i>
+          </div>
+          <form (ngSubmit)="onSubmit()" [formGroup]="loginform" autocomplete="off">
+            <div class="form-group">
+              <label for="" class="form-custom-label">Username</label>
+              <input type="text" autocomplete="new-username" formControlName="username" placeholder="jhondoe123"
+                class="form-custom-control" name="username">
+              <div
+                *ngIf="getFormControl('username').invalid && (getFormControl('username').dirty || getFormControl('username').touched)"
+                class="invalid-feedback">
+                <p *ngIf="getFormControl('username').errors.required">Username is required</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="" class="form-custom-label">Password</label>
+              <span class="password">
+                <input [type]="type" formControlName="password" autocomplete="new-password" placeholder="******"
+                  class="form-custom-control" name="password">
+                <span class="password-visibility">
+                  <i *ngIf="visible" (click)="toggleVisibility()" class="fas fa-2x fa-eye-slash"></i>
+                  <i *ngIf="!visible" (click)="toggleVisibility()" class="far fa-2x fa-eye"></i>
+                </span>
+              </span>
+              <div
+                *ngIf="getFormControl('password').invalid && (getFormControl('password').dirty || getFormControl('password').touched)"
+                class="invalid-feedback">
+                <p *ngIf="getFormControl('password').errors.required">Password is required</p>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-full btn-primary">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

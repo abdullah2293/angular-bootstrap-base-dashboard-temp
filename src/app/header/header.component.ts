@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalstorageService } from '../services/storage/localstorage.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private storage:LocalstorageService) { }
 
   ngOnInit() {
   }
 
+  logout(){
+    this.storage.remove()
+    window.location.reload()
+  }
 }

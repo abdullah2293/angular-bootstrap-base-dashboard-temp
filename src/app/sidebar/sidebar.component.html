@@ -1,28 +1,40 @@
 <nav class="col-md-12 d-none d-md-block bg-light sidebar">
   <div class="sidebar-sticky">
     <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" routerLink="">
-          Dashboard <span class="sr-only">(current)</span>
+      <li class="nav-item nav-profile">
+        <div class="profile-name d-flex">
+          <p class="name" *ngIf="user">
+            {{user.first_name}} {{user.last_name}}
+          </p>
+          <p class="designation" *ngIf="role">
+            {{role.display_name}}
+          </p>
+        </div>
+      </li>
+      <li class="nav-item nav-category">
+        <span class="nav-link">Operations</span>
+      </li>
+      <li class="nav-item" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+        <a class="nav-link" routerLink="/">
+          <i class="fas fa-tachometer-alt"></i>
+          <span class="menu-title">Dashboard</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" 
-          (click)="isCollapsed = !isCollapsed"
-          [attr.aria-expanded]="!isCollapsed">
+      <li class="nav-item" >
+        <a class="nav-link nav-dropdown--js" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
           <i class="fa fa-bookmark"></i>
           <span class="menu-title">Manage Bookings</span>
           <i class="fa fa-angle-down"></i>
         </a>
         <div [ngbCollapse]="!isCollapsed">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/list/bookings">
+            <li class="nav-item">
+              <a class="nav-link" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" routerLink="/list/bookings">
                 <span class="menu-title">All Bookings</span>
               </a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/new/booking">
+            <li class="nav-item">
+              <a class="nav-link" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" routerLink="/new/booking">
                 <span class="menu-title">Add Booking</span>
               </a>
             </li>
